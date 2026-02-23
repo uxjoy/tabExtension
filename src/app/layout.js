@@ -14,6 +14,9 @@ const geistMono = Geist_Mono({
 export const metadata = {
   title: "Copy All Open Tab URLs – TabShare",
   description: "Copy and organize your open Chrome tabs. Auto-group by domain and copy selected tab URLs in seconds.",
+  icons: {
+    icon: "/logo.svg",
+  },
 };
 
 export default function RootLayout({ children }) {
