@@ -1,10 +1,10 @@
-import { CheckCircle, Copy, Layers, Zap } from "lucide-react";
+import { CheckCircle, Copy, File, Layers, Zap } from "lucide-react";
 import Link from "next/link";
 
 const Home = () => {
   return (
-    <div className="min-h-screen bg-linear-to-br from-slate-900 via-slate-800 to-slate-900 text-white">
-      <nav className="border-b border-slate-700 bg-slate-900/50 backdrop-blur-md sticky top-0 z-50">
+    <div className="min-h-screen bg-linear-to-br from-neutral-900 via-neutral-800 to-neutral-900 text-white">
+      <nav className="border-b border-neutral-700 bg-neutral-900/50 backdrop-blur-md sticky top-0 z-50">
         <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <svg width="36" height="36" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -31,7 +31,7 @@ const Home = () => {
             </h1>
           </div>
 
-          <Link href="/privacy-policy" className=" text-slate-400 hover:text-lime-300 transition">
+          <Link href="/privacy-policy" className=" text-neutral-400 hover:text-lime-300 transition">
             Privacy Policy
           </Link>
 
@@ -41,24 +41,45 @@ const Home = () => {
         </div>
       </nav>
 
-      <main className="max-w-6xl mx-auto px-6 py-20">
+      <main className="max-w-6xl mx-auto px-6 py-20 space-y-20">
         {/* Hero Section */}
-        <section className="text-center mb-24">
+        <section className="text-left">
           <h2 className="text-5xl md:text-6xl font-bold mb-6 leading-tight">
             Copy All Open Tab URLs –
             <span className="bg-linear-to-r from-lime-300 to-lime-300 bg-clip-text text-transparent">TabShare</span>
           </h2>
-          <p className="text-xl text-slate-300 max-w-3xl mx-auto mb-8 leading-relaxed">
+          <p className="text-xl text-neutral-300 max-w-3xl mb-8 leading-relaxed">
             Copy and organize your open Chrome tabs. Auto-group by domain and copy selected tab URLs in seconds.
           </p>
-          <p className="text-lg text-slate-400 max-w-2xl mx-auto">
+          {/* <p className="text-lg text-neutral-400 max-w-2xl">
+            If you frequently copy multiple tabs for research, documentation, sharing links, or organizing browsing
+            sessions, this tool saves time and eliminates manual copying.
+          </p> */}
+        </section>
+
+        <div className="w-full h-px bg-neutral-700/50 "></div>
+
+        {/* Description */}
+        <section className="space-y-4">
+          <div className="md:col-span-2">
+            <h3 className="text-3xl font-bold flex items-center gap-3">
+              <File className="w-8 h-8 text-lime-300" />
+              Description
+            </h3>
+          </div>
+          <p className="text-neutral-300 leading-relaxed">
+            **TabShare** lets you copy open tab URLs in Chrome quickly and efficiently.
+            <br />
+            Select one tab or multiple tabs, br group Chrome tabs automatically by domain, and copy grouped tab URLs in
+            a clean format with one click.
+            <br />
             If you frequently copy multiple tabs for research, documentation, sharing links, or organizing browsing
             sessions, this tool saves time and eliminates manual copying.
           </p>
         </section>
 
         {/* Features Section */}
-        <section className="w-full mb-24 space-y-6">
+        <section className="w-full space-y-6">
           <div className="md:col-span-2">
             <h3 className="text-3xl font-bold flex items-center gap-3">
               <Zap className="w-8 h-8 text-lime-300" />
@@ -66,7 +87,7 @@ const Home = () => {
             </h3>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-2 mb-24">
+          <div className="grid md:grid-cols-2 gap-2">
             {[
               "Copy the active tab URL with one click",
               "Select multiple tabs and copy only what you need",
@@ -78,17 +99,17 @@ const Home = () => {
             ].map((feature, idx) => (
               <div
                 key={idx}
-                className="flex items-center gap-4 p-6 rounded-lg bg-slate-700/30 border border-slate-600/50 hover:border-lime-300/50 transition group"
+                className="flex items-center gap-4 p-6 rounded-lg bg-neutral-700/30 border border-neutral-600/50 hover:border-lime-300/50 transition group"
               >
                 <CheckCircle className="w-6 h-6 text-lime-300 flex-shrink-0 mt-1 group-hover:scale-110 transition" />
-                <p className="text-slate-200 leading-relaxed">{feature}</p>
+                <p className="text-neutral-200 leading-relaxed">{feature}</p>
               </div>
             ))}
           </div>
         </section>
 
         {/* Ideal For Section */}
-        <section className="bg-slate-700/20 border border-slate-600/50 rounded-2xl p-12 mb-24">
+        <section className="bg-neutral-700/20 border border-neutral-600/50 rounded-2xl p-12 ">
           <h3 className="text-3xl font-bold mb-8 flex items-center gap-3">
             <Layers className="w-8 h-8 text-lime-300" />
             Ideal For
@@ -106,23 +127,24 @@ const Home = () => {
             ].map((item, idx) => (
               <li key={idx} className="flex items-center gap-3">
                 <span className="text-lime-300 font-bold mb-1">→</span>
-                <span className="text-slate-300">{item}</span>
+                <span className="text-neutral-300">{item}</span>
               </li>
             ))}
           </ul>
         </section>
 
         {/* Lightweight Section */}
-        <section className="text-center bg-linear-to-r from-lime-300/20 to-lime-300/20 border border-lime-300/30 rounded-2xl p-16 mb-16">
-          <h3 className="text-3xl font-bold mb-6 flex items-center justify-center gap-3">
+        <section className="bg-linear-to-r from-lime-300/20 to-lime-300/20 border border-lime-300/30 rounded-2xl p-16">
+          <h3 className="text-3xl font-bold mb-6 flex items-center gap-3">
             <Copy className="w-8 h-8 text-lime-300" />
             Fast & Lightweight
           </h3>
-          <p className="text-lg text-slate-300 max-w-2xl mx-auto mb-6 leading-relaxed">
+
+          <p className="text-lg text-neutral-300 max-w-2xl mb-6 leading-relaxed">
             This extension focuses only on copying and grouping open tabs in Chrome.
           </p>
-          <p className="text-slate-400 mb-8">No unnecessary features. No clutter.</p>
-          <p className="text-slate-300 max-w-2xl mx-auto font-semibold">
+          <p className="text-neutral-400 mb-8">No unnecessary features. No clutter.</p>
+          <p className="text-neutral-300 max-w-2xl font-semibold">
             Whether you're sending links to Slack, email, Notion, Jira, or WhatsApp — TabShare gives you a structured
             list instantly.
           </p>
@@ -133,15 +155,15 @@ const Home = () => {
           <button className="bg-linear-to-r from-lime-300 to-lime-300 hover:from-lime-400 hover:to-lime-400 transition px-10 py-4 rounded-lg font-bold text-lg mb-4 shadow-lg shadow-lime-300/30">
             Add TabShare to Chrome
           </button>
-          <p className="text-slate-400">Free • No Sign-up Required • 100% Privacy</p>
+          <p className="text-neutral-400">Free • No Sign-up Required • 100% Privacy</p>
         </section> */}
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-slate-700 bg-slate-900/50 py-12">
+      <footer className="border-t border-neutral-700 bg-neutral-900/50 py-12">
         <div className="max-w-6xl mx-auto px-6 text-center">
-          <p className="text-slate-500 mb-4">© 2026 TabShare. Built for Chrome lovers.</p>
-          <div className="flex justify-center gap-6 text-slate-400">
+          <p className="text-neutral-500 mb-4">© 2026 TabShare. Built for Chrome lovers.</p>
+          <div className="flex justify-center gap-6 text-neutral-400">
             <Link href="/privacy-policy" className="hover:text-lime-500 transition">
               Privacy Policy
             </Link>
