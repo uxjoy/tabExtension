@@ -1,12 +1,15 @@
 import { CheckCircle, Copy, File, Layers, Zap } from "lucide-react";
 import Link from "next/link";
 
+const WEB_STORE_URL =
+  "https://chromewebstore.google.com/detail/lfchodlbelcpndbaebikoneaabddhofk?utm_source=item-share-cb";
+
 const Home = () => {
   return (
     <div className="min-h-screen bg-linear-to-br from-neutral-900 via-neutral-800 to-neutral-900 text-white">
       <nav className="border-b border-neutral-700 bg-neutral-900/50 backdrop-blur-md sticky top-0 z-50">
         <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
+          <Link href={"/"} className="flex items-center gap-3">
             <svg width="36" height="36" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
               <g clip-path="url(#clip0_33_13)">
                 <rect width="48" height="48" rx="12" fill="url(#paint0_linear_33_13)" />
@@ -29,7 +32,7 @@ const Home = () => {
             <h1 className="text-2xl font-bold bg-linear-to-r from-lime-200 to-lime-300 bg-clip-text text-transparent">
               TabShare
             </h1>
-          </div>
+          </Link>
 
           <Link href="/privacy-policy" className=" text-neutral-400 hover:text-lime-300 transition">
             Privacy Policy
@@ -46,11 +49,43 @@ const Home = () => {
         <section className="text-left">
           <h2 className="text-5xl md:text-6xl font-bold mb-6 leading-tight">
             Copy All Open Tab URLs –
-            <span className="bg-linear-to-r from-lime-300 to-lime-300 bg-clip-text text-transparent">TabShare</span>
+            <span className="bg-linear-to-r from-lime-200 to-lime-400 bg-clip-text text-transparent">TabShare</span>
           </h2>
           <p className="text-xl text-neutral-300 max-w-3xl mb-8 leading-relaxed">
             Copy and organize your open Chrome tabs. Auto-group by domain and copy selected tab URLs in seconds.
           </p>
+
+          <Link
+            href={WEB_STORE_URL}
+            target="_blank"
+            className="inline-flex items-center gap-1.5 font-semibold mt-4 p-2 pr-5 rounded-full bg-white text-neutral-900 text-lg shadow-lg transition hover:shadow-xl hover:brightness-90"
+          >
+            <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M20.0005 29.2726C25.1223 29.2726 29.2741 25.1205 29.2741 19.9987C29.2741 14.8769 25.1223 10.7249 20.0005 10.7249C14.8788 10.7249 10.7267 14.8769 10.7267 19.9987C10.7267 25.1205 14.8786 29.2726 20.0004 29.2726"
+                fill="white"
+              />
+              <path
+                d="M8.0066 15.442C7.31476 14.2436 6.50156 12.986 5.56701 11.6689C4.10395 14.2025 3.33367 17.0765 3.33362 20.0022C3.33357 22.9278 4.10375 25.8019 5.56673 28.3354C7.02971 30.869 9.13392 32.9728 11.6678 34.4352C14.2017 35.8976 17.0759 36.6672 20.0016 36.6665C21.5355 34.5151 22.577 32.9638 23.1261 32.0129C24.1806 30.1863 25.5444 27.5712 27.2176 24.1677V24.1657C26.4866 25.4331 25.4348 26.4856 24.168 27.2175C22.9012 27.9494 21.464 28.3348 20.001 28.3351C18.5379 28.3353 17.1006 27.9503 15.8336 27.2188C14.5665 26.4873 13.5144 25.4351 12.783 24.1679C10.5106 19.9299 8.9185 17.0212 8.0066 15.442Z"
+                fill="#229342"
+              />
+              <path
+                d="M20.0012 36.6665C22.1899 36.6669 24.3573 36.2361 26.3795 35.3986C28.4017 34.5612 30.2391 33.3335 31.7867 31.7858C33.3344 30.2381 34.5619 28.4006 35.3993 26.3784C36.2366 24.3561 36.6673 22.1887 36.6668 20C36.6662 17.0743 35.8955 14.2004 34.4321 11.667C31.2748 11.3558 28.9446 11.2002 27.4417 11.2002C25.7375 11.2002 23.2569 11.3558 20 11.667L19.9982 11.6683C21.4612 11.6676 22.8987 12.0521 24.166 12.7832C25.4333 13.5144 26.4857 14.5663 27.2175 15.8333C27.9492 17.1002 28.3345 18.5375 28.3344 20.0006C28.3344 21.4637 27.9491 22.901 27.2173 24.1679L20.0012 36.6665Z"
+                fill="#FBC116"
+              />
+              <path
+                d="M20.0004 26.5987C23.6442 26.5987 26.598 23.6449 26.598 20.001C26.598 16.3571 23.6442 13.4033 20.0003 13.4033C16.3567 13.4033 13.4028 16.3572 13.4028 20.001C13.4028 23.6448 16.3567 26.5987 20.0004 26.5987Z"
+                fill="#1A73E8"
+              />
+              <path
+                d="M20.0005 11.6672H34.4324C32.97 9.13325 30.8662 7.02903 28.3326 5.56609C25.799 4.10314 22.9248 3.33305 19.9992 3.33325C17.0735 3.33345 14.1995 4.10393 11.6661 5.56721C9.13265 7.0305 7.02915 9.13501 5.56708 11.6691L12.7831 24.1679L12.7851 24.1689C12.053 22.9022 11.6673 21.465 11.6669 20.0019C11.6665 18.5389 12.0513 17.1015 12.7826 15.8343C13.514 14.5672 14.5661 13.5149 15.8331 12.7834C17.1002 12.0518 18.5375 11.6668 20.0006 11.667L20.0005 11.6672Z"
+                fill="#E33B2E"
+              />
+            </svg>
+
+            <span>Add to Chrome</span>
+          </Link>
+
           {/* <p className="text-lg text-neutral-400 max-w-2xl">
             If you frequently copy multiple tabs for research, documentation, sharing links, or organizing browsing
             sessions, this tool saves time and eliminates manual copying.
@@ -68,7 +103,7 @@ const Home = () => {
             </h3>
           </div>
           <p className="text-neutral-300 leading-relaxed">
-            **TabShare** lets you copy open tab URLs in Chrome quickly and efficiently.
+            <b className="text-lime-300">TabShare</b> lets you copy open tab URLs in Chrome quickly and efficiently.
             <br />
             Select one tab or multiple tabs, br group Chrome tabs automatically by domain, and copy grouped tab URLs in
             a clean format with one click.
