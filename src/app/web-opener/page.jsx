@@ -8,53 +8,57 @@ export default function WebOpenerPage() {
   const [error, setError] = useState(null);
   const [message, setMessage] = useState(null);
 
-  // Decode data from #data=... (or ?data=...) once on mount
   useEffect(() => {
-    try {
-      if (typeof window === "undefined") return;
-
-      const hash = window.location.hash.startsWith("#") ? window.location.hash.substring(1) : "";
-      const hashParams = new URLSearchParams(hash);
-      const searchParams = new URLSearchParams(window.location.search);
-
-      const encodedData = hashParams.get("data") ?? searchParams.get("data");
-
-      if (!encodedData) {
-        throw new Error("No tab data found in the link.");
-      }
-
-      // Match extension encoding: btoa(encodeURIComponent(JSON))
-      let jsonString;
+    async function load() {
       try {
-        jsonString = decodeURIComponent(atob(encodedData));
-      } catch {
-        throw new Error("Invalid encoded data in link.");
+        if (typeof window === "undefined") return;
+
+        const hash = window.location.hash.startsWith("#") ? window.location.hash.substring(1) : "";
+        const hashParams = new URLSearchParams(hash);
+        const searchParams = new URLSearchParams(window.location.search);
+
+        // We encode from the extension into #data=...
+        const encodedData = hashParams.get("data") ?? searchParams.get("data");
+
+        if (!encodedData) {
+          throw new Error("No tab data found in the link.");
+        }
+
+        let jsonString;
+        try {
+          // Match extension: btoa(encodeURIComponent(json))
+          jsonString = decodeURIComponent(atob(encodedData));
+        } catch {
+          throw new Error("Invalid encoded data in link.");
+        }
+
+        let decoded;
+        try {
+          decoded = JSON.parse(jsonString);
+        } catch {
+          throw new Error("Failed to parse tab data.");
+        }
+
+        if (!Array.isArray(decoded)) {
+          throw new Error("Invalid tab data format.");
+        }
+
+        const cleaned = decoded.filter((t) => t && typeof t.url === "string");
+
+        if (!cleaned.length) {
+          throw new Error("No valid tabs found in data.");
+        }
+
+        setTabs(cleaned);
+      } catch (e) {
+        console.error("WebOpener error:", e);
+        setError(e?.message || "Failed to load shared tabs.");
+      } finally {
+        setLoading(false);
       }
-
-      let decoded;
-      try {
-        decoded = JSON.parse(jsonString);
-      } catch {
-        throw new Error("Failed to parse tab data.");
-      }
-
-      if (!Array.isArray(decoded)) {
-        throw new Error("Invalid tab data format.");
-      }
-
-      const cleaned = decoded.filter((t) => t && typeof t.url === "string");
-
-      if (!cleaned.length) {
-        throw new Error("No valid tabs found in data.");
-      }
-
-      setTabs(cleaned);
-    } catch (e) {
-      console.error("WebOpener error:", e);
-      setError(e?.message || "Failed to load shared tabs.");
-    } finally {
-      setLoading(false);
     }
+
+    load();
   }, []);
 
   const openAllTabs = () => {
