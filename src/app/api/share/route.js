@@ -1,7 +1,8 @@
 import { kv } from "@vercel/kv";
+import { nanoid } from "nanoid";
 
 const corsHeaders = {
-  "Access-Control-Allow-Origin": "*", // you can later lock this down
+  "Access-Control-Allow-Origin": "*", // later you can restrict this
   "Access-Control-Allow-Methods": "GET,POST,OPTIONS",
   "Access-Control-Allow-Headers": "Content-Type",
 };
@@ -11,27 +12,30 @@ export async function OPTIONS() {
 }
 
 export async function POST(req) {
-  const body = await req.json();
-  const tabs = body?.tabs;
+  try {
+    const body = await req.json();
+    const tabs = body?.tabs;
 
-  if (!Array.isArray(tabs) || tabs.length === 0) {
-    return new Response("Invalid tabs", { status: 400, headers: corsHeaders });
+    if (!Array.isArray(tabs) || tabs.length === 0) {
+      return new Response("Invalid tabs", { status: 400, headers: corsHeaders });
+    }
+
+    const id = nanoid(8);
+    await kv.set(`tabs:${id}`, JSON.stringify(tabs), {
+      ex: 60 * 60 * 24 * 7, // 7 days
+    });
+
+    return new Response(JSON.stringify({ id }), {
+      status: 200,
+      headers: { "Content-Type": "application/json", ...corsHeaders },
+    });
+  } catch (err) {
+    console.error("POST /api/share error:", err);
+    return new Response("Server error", {
+      status: 500,
+      headers: corsHeaders,
+    });
   }
-
-  // TEMP: just echo tabs back; you can add KV later
-  const id = crypto.randomUUID().slice(0, 8);
-  return new Response(JSON.stringify({ id, tabs }), {
-    status: 200,
-    headers: { "Content-Type": "application/json", ...corsHeaders },
-  });
-}
-
-export async function GET(req) {
-  // TEMP: no storage yet, just show an error
-  return new Response("Not implemented", {
-    status: 501,
-    headers: corsHeaders,
-  });
 }
 
 export async function GET(req) {
@@ -58,10 +62,7 @@ export async function GET(req) {
 
     return new Response(JSON.stringify({ id, tabs }), {
       status: 200,
-      headers: {
-        "Content-Type": "application/json",
-        ...corsHeaders,
-      },
+      headers: { "Content-Type": "application/json", ...corsHeaders },
     });
   } catch (err) {
     console.error("GET /api/share error:", err);
