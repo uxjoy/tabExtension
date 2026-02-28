@@ -13,11 +13,29 @@ export default function WebOpenerPage() {
       try {
         if (typeof window === "undefined") return;
 
+        const url = new URL(window.location.href);
+        const searchParams = url.searchParams;
         const hash = window.location.hash.startsWith("#") ? window.location.hash.substring(1) : "";
         const hashParams = new URLSearchParams(hash);
-        const searchParams = new URLSearchParams(window.location.search);
 
-        // We encode from the extension into #data=...
+        // 1) Prefer short id-based links: ?id=... or #id=...
+        const id = searchParams.get("id") ?? hashParams.get("id");
+        if (id) {
+          const res = await fetch(`/api/share?id=${encodeURIComponent(id)}`);
+          if (!res.ok) {
+            throw new Error("Shared tabs not found.");
+          }
+          const data = await res.json();
+          const fetchedTabs = Array.isArray(data.tabs) ? data.tabs : [];
+          if (!fetchedTabs.length) {
+            throw new Error("No tabs found for this link.");
+          }
+          setTabs(fetchedTabs);
+          setLoading(false);
+          return;
+        }
+
+        // 2) Fallback: legacy #data=... base64 mode
         const encodedData = hashParams.get("data") ?? searchParams.get("data");
 
         if (!encodedData) {
@@ -26,16 +44,15 @@ export default function WebOpenerPage() {
 
         let jsonString;
         try {
-          // Match extension: btoa(encodeURIComponent(json))
           jsonString = decodeURIComponent(atob(encodedData));
-        } catch {
+        } catch (e) {
           throw new Error("Invalid encoded data in link.");
         }
 
         let decoded;
         try {
           decoded = JSON.parse(jsonString);
-        } catch {
+        } catch (e) {
           throw new Error("Failed to parse tab data.");
         }
 
@@ -44,7 +61,6 @@ export default function WebOpenerPage() {
         }
 
         const cleaned = decoded.filter((t) => t && typeof t.url === "string");
-
         if (!cleaned.length) {
           throw new Error("No valid tabs found in data.");
         }
@@ -64,7 +80,6 @@ export default function WebOpenerPage() {
   const openAllTabs = () => {
     if (!tabs.length || typeof document === "undefined") return;
 
-    // Use temporary anchors to reduce popup blocking
     tabs.forEach((tab) => {
       if (!tab.url) return;
       const a = document.createElement("a");
@@ -149,8 +164,8 @@ export default function WebOpenerPage() {
             </div>
 
             <p className="text-[11px] text-slate-500">
-              If only one tab opens, allow pop‑ups for <span className="font-mono">tabshareurl.vercel.app</span> in your
-              browser and try again.
+              Tip: If only one tab opens, your browser is probably blocking pop-ups. Please allow pop-ups for{" "}
+              <span className="font-mono">tabshareurl.vercel.app</span> and try again.
             </p>
           </>
         )}
