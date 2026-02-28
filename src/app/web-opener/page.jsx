@@ -36,23 +36,20 @@ export default function WebOpenerPage() {
   }, []);
 
   const openAllTabs = () => {
-    if (!tabs.length || typeof window === "undefined") return;
+    if (!tabs.length) return;
 
     tabs.forEach((tab) => {
       if (!tab.url) return;
-      window.open(tab.url, "_blank");
+      const a = document.createElement("a");
+      a.href = tab.url;
+      a.target = "_blank";
+      a.rel = "noopener noreferrer";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
     });
 
     setMessage(`Opening ${tabs.length} tabs...`);
-  };
-
-  const copyLinks = async () => {
-    if (!tabs.length || typeof navigator === "undefined") return;
-
-    const text = tabs.map((t, i) => `${i + 1}. ${t.title || t.url}\n${t.url}`).join("\n\n");
-
-    await navigator.clipboard.writeText(text);
-    setMessage("Copied all links to clipboard.");
   };
 
   return (
