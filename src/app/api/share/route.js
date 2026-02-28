@@ -1,11 +1,11 @@
-import { kv } from "@vercel/kv";
-import { nanoid } from "nanoid";
-
 const corsHeaders = {
-  "Access-Control-Allow-Origin": "*", // later you can restrict this
+  "Access-Control-Allow-Origin": "*", // later: restrict if you want
   "Access-Control-Allow-Methods": "GET,POST,OPTIONS",
   "Access-Control-Allow-Headers": "Content-Type",
 };
+
+// Simple in-memory store (not persistent across deploys/restarts)
+const store = new Map();
 
 export async function OPTIONS() {
   return new Response(null, { status: 204, headers: corsHeaders });
@@ -20,10 +20,8 @@ export async function POST(req) {
       return new Response("Invalid tabs", { status: 400, headers: corsHeaders });
     }
 
-    const id = nanoid(8);
-    await kv.set(`tabs:${id}`, JSON.stringify(tabs), {
-      ex: 60 * 60 * 24 * 7, // 7 days
-    });
+    const id = crypto.randomUUID().slice(0, 8);
+    store.set(id, tabs);
 
     return new Response(JSON.stringify({ id }), {
       status: 200,
@@ -50,15 +48,13 @@ export async function GET(req) {
       });
     }
 
-    const stored = await kv.get(`tabs:${id}`);
-    if (!stored) {
+    const tabs = store.get(id);
+    if (!tabs) {
       return new Response("Not found", {
         status: 404,
         headers: corsHeaders,
       });
     }
-
-    const tabs = JSON.parse(stored);
 
     return new Response(JSON.stringify({ id, tabs }), {
       status: 200,
