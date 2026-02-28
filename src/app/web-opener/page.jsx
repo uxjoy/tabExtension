@@ -8,6 +8,7 @@ export default function WebOpenerPage() {
   const [error, setError] = useState(null);
   const [message, setMessage] = useState(null);
 
+  // Decode data from #data=... (or ?data=...) once on mount
   useEffect(() => {
     try {
       if (typeof window === "undefined") return;
@@ -22,9 +23,10 @@ export default function WebOpenerPage() {
         throw new Error("No tab data found in the link.");
       }
 
+      // Match extension encoding: btoa(encodeURIComponent(JSON))
       let jsonString;
       try {
-        jsonString = atob(encodedData);
+        jsonString = decodeURIComponent(atob(encodedData));
       } catch {
         throw new Error("Invalid encoded data in link.");
       }
@@ -58,6 +60,7 @@ export default function WebOpenerPage() {
   const openAllTabs = () => {
     if (!tabs.length || typeof document === "undefined") return;
 
+    // Use temporary anchors to reduce popup blocking
     tabs.forEach((tab) => {
       if (!tab.url) return;
       const a = document.createElement("a");
