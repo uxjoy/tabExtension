@@ -1,5 +1,6 @@
 "use client";
 
+import { Info } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
@@ -19,7 +20,9 @@ export default function WebOpenerPage() {
 
         const url = new URL(window.location.href);
         const searchParams = url.searchParams;
-        const hash = window.location.hash.startsWith("#") ? window.location.hash.substring(1) : "";
+        const hash = window.location.hash.startsWith("#")
+          ? window.location.hash.substring(1)
+          : "";
         const hashParams = new URLSearchParams(hash);
 
         // 1) Prefer short id-based links: ?id=... or #id=...
@@ -102,7 +105,9 @@ export default function WebOpenerPage() {
     if (!tabs.length || typeof navigator === "undefined") return;
 
     try {
-      const text = tabs.map((t, i) => `${i + 1}. ${t.title || t.url}\n${t.url}`).join("\n\n");
+      const text = tabs
+        .map((t, i) => `${i + 1}. ${t.title || t.url}\n${t.url}`)
+        .join("\n\n");
 
       await navigator.clipboard.writeText(text);
       setMessage("Copied all links to clipboard.");
@@ -125,15 +130,35 @@ export default function WebOpenerPage() {
             xmlns="http://www.w3.org/2000/svg"
           >
             <g clip-path="url(#clip0_41_40)">
-              <rect width="96" height="96" rx="28" fill="url(#paint0_linear_41_40)" />
+              <rect
+                width="96"
+                height="96"
+                rx="28"
+                fill="url(#paint0_linear_41_40)"
+              />
               <path
                 d="M28.4969 48.9484L27.6339 50.9283C27.0023 52.3777 24.9975 52.3777 24.3659 50.9283L23.503 48.9484C21.9647 45.4181 19.1941 42.6074 15.7368 41.0698L13.0782 39.8873C11.6406 39.2479 11.6406 37.1558 13.0782 36.5164L15.5882 35.4C19.1343 33.8228 21.9546 30.9081 23.4664 27.2579L24.3526 25.1184C24.9702 23.6272 27.0296 23.6272 27.6472 25.1184L28.5334 27.2579C30.0452 30.9081 32.8655 33.8228 36.4118 35.4L38.9216 36.5164C40.3595 37.1558 40.3595 39.2479 38.9216 39.8873L36.263 41.0698C32.8058 42.6074 30.0351 45.4181 28.4969 48.9484ZM22.7226 99.6462C26.3099 77.977 34.0887 30.988 85.5 30.988C80.2647 41.488 76.75 46.738 73.25 50.238L69.75 53.738L75 57.238C71.5 67.7381 61 79.9881 47 81.7381C37.6601 82.9053 31.8247 89.3223 29.4938 100.988H22.5C22.5726 100.553 22.6466 100.105 22.7226 99.6462Z"
                 fill="#173E08"
               />
             </g>
-            <rect x="0.5" y="0.5" width="95" height="95" rx="27.5" stroke="white" stroke-opacity="0.72" />
+            <rect
+              x="0.5"
+              y="0.5"
+              width="95"
+              height="95"
+              rx="27.5"
+              stroke="white"
+              stroke-opacity="0.72"
+            />
             <defs>
-              <linearGradient id="paint0_linear_41_40" x1="0" y1="0" x2="96" y2="96" gradientUnits="userSpaceOnUse">
+              <linearGradient
+                id="paint0_linear_41_40"
+                x1="0"
+                y1="0"
+                x2="96"
+                y2="96"
+                gradientUnits="userSpaceOnUse"
+              >
                 <stop offset="0.2" stop-color="#D9F99D" />
                 <stop offset="1" stop-color="#84CC16" />
               </linearGradient>
@@ -154,7 +179,13 @@ export default function WebOpenerPage() {
             target="_blank"
             className="flex items-center gap-1.5 font-medium mt-4 p-2 pr-3 rounded-full bg-linear-to-r from-neutral-900 to-lime-700 text-white text-sm shadow-lg transition hover:shadow-xl hover:brightness-120"
           >
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
               <path
                 d="M10.0002 14.6364C12.5611 14.6364 14.637 12.5604 14.637 9.99948C14.637 7.4386 12.5611 5.36255 10.0002 5.36255C7.43936 5.36255 5.36331 7.4386 5.36331 9.99948C5.36331 12.5604 7.43929 14.6364 10.0002 14.6364"
                 fill="white"
@@ -181,13 +212,17 @@ export default function WebOpenerPage() {
           </Link>
         </header>
 
-        {loading && !error && <p className="text-sm text-neutral-500">Loading shared tabs…</p>}
+        {loading && !error && (
+          <p className="text-sm text-neutral-500">Loading shared tabs…</p>
+        )}
 
         {error && (
           <div className="mb-4 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600">
             {/* <p className="font-semibold">Error</p> */}
             <p className="text-lg font-semibold">{error}</p>
-            <p className="text-neutral-800">Make sure you opened the full link that was shared with you.</p>
+            <p className="text-neutral-800">
+              Make sure you opened the full link that was shared with you.
+            </p>
           </div>
         )}
 
@@ -243,13 +278,27 @@ export default function WebOpenerPage() {
             </div>
 
             <p className="text-xs text-center text-neutral-600 px-6 italic">
-              Tip: If only one tab opens, your browser is probably blocking pop-ups. Please allow pop-ups for{" "}
-              <span className="font-mono text-neutral-900 font-semibold">tabshareurl.vercel.app</span> and try again.
+              Tip: If only one tab opens, your browser is probably{" "}
+              <span className="font-semibold text-rose-500">
+                blocking pop-ups
+              </span>
+              . Please allow pop-ups for{" "}
+              <span className="font-mono text-neutral-900 font-semibold">
+                tabshareurl.vercel.app
+              </span>{" "}
+              and try again.
             </p>
           </div>
         )}
 
-        {message && <div className="mt-3 rounded-md bg-emerald-50 px-3 py-2 text-xs text-emerald-800">{message}</div>}
+        {message && (
+          <div className="w-full text-center mt-3">
+            <p className="mt-3 inline-flex items-center justify-center gap-1 text-center border border-amber-500 rounded-full bg-amber-50 p-2 text-xs text-amber-600 font-semibold">
+              <Info className="inline-block w-4 h-4" />
+              <span> {message}</span>
+            </p>
+          </div>
+        )}
       </div>
 
       <Link
