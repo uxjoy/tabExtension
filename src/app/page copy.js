@@ -52,8 +52,7 @@ const Home = () => {
             <span className="bg-linear-to-r from-lime-200 to-lime-400 bg-clip-text text-transparent">TabShare</span>
           </h2>
           <p className="text-xl text-neutral-300 max-w-3xl mb-8 leading-relaxed">
-            Copy and organize your open Chrome tabs. Auto-group by domain, copy selected tab URLs, and generate
-            shareable tab-session links in seconds.
+            Copy and organize your open Chrome tabs. Auto-group by domain and copy selected tab URLs in seconds.
           </p>
 
           <Link
@@ -87,10 +86,6 @@ const Home = () => {
             <span>Add to Chrome</span>
           </Link>
 
-          <p className="text-sm text-neutral-400 mt-4">
-            No background tracking. Tab data is accessed only when you open and use the extension.
-          </p>
-
           {/* <p className="text-lg text-neutral-400 max-w-2xl">
             If you frequently copy multiple tabs for research, documentation, sharing links, or organizing browsing
             sessions, this tool saves time and eliminates manual copying.
@@ -108,14 +103,13 @@ const Home = () => {
             </h3>
           </div>
           <p className="text-neutral-300 leading-relaxed">
-            <b className="text-lime-300">TabShare</b> lets you copy and share open tab URLs in Chrome quickly and
-            efficiently.
+            <b className="text-lime-300">TabShare</b> lets you copy open tab URLs in Chrome quickly and efficiently.
             <br />
-            Select one tab or multiple tabs, group Chrome tabs automatically by domain, and copy grouped tab URLs in a
-            clean format with one click.
+            Select one tab or multiple tabs, br group Chrome tabs automatically by domain, and copy grouped tab URLs in
+            a clean format with one click.
             <br />
-            When you need to share a browsing session, generate a shareable link from selected tabs with a single
-            action — no accounts and no background tracking.
+            If you frequently copy multiple tabs for research, documentation, sharing links, or organizing browsing
+            sessions, this tool saves time and eliminates manual copying.
           </p>
         </section>
 
@@ -134,10 +128,9 @@ const Home = () => {
               "Select multiple tabs and copy only what you need",
               "Automatically group tabs by domain",
               "Copy URLs by group",
-              "Generate shareable links from selected tabs",
-              "Share structured tab sessions with teammates or friends",
-              "Tab access only when you open the extension",
-              "No background tracking or analytics",
+              "Select specific tabs using checkboxes",
+              "Copy all selected links at once",
+              "Auto Group to organize your open tabs by domain",
             ].map((feature, idx) => (
               <div
                 key={idx}
@@ -183,13 +176,12 @@ const Home = () => {
           </h3>
 
           <p className="text-lg text-neutral-300 max-w-2xl mb-6 leading-relaxed">
-            This extension focuses on fast tab management — copying, grouping, and creating shareable tab-session links
-            in Chrome.
+            This extension focuses only on copying and grouping open tabs in Chrome.
           </p>
-          <p className="text-neutral-400 mb-8">No sign-up. No ads. No tracking.</p>
+          <p className="text-neutral-400 mb-8">No unnecessary features. No clutter.</p>
           <p className="text-neutral-300 max-w-2xl font-semibold">
             Whether you're sending links to Slack, email, Notion, Jira, or WhatsApp — TabShare gives you a structured
-            list or shareable link instantly.
+            list instantly.
           </p>
         </section>
 
