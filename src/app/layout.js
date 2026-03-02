@@ -13,17 +13,22 @@ const geistMono = Geist_Mono({
 
 export const metadata = {
   title: "Copy All Open Tab URLs – TabShare",
-  description: "Copy and organize your open Chrome tabs. Auto-group by domain and copy selected tab URLs in seconds.",
+  description:
+    "Copy and organize your open Chrome tabs. Auto-group by domain and copy selected tab URLs in seconds.",
   icons: {
     icon: "/logo.svg",
   },
-  favicon: "/logo.svg",
+  favicon: "/favicon.ico",
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>{children}</body>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      >
+        {children}
+      </body>
     </html>
   );
 }
